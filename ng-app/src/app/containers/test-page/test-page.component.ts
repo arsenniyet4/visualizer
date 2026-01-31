@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 })
 export class TestPageComponent implements OnInit {
 
+  testVariable: string = 'This is a test variable';
+  
   constructor(
     private projectsStore: ProjectsStore,
     public store: AppStore,

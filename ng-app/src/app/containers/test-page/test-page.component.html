@@ -2,8 +2,9 @@
     @for(project of store.projects; track project.id) {
         <div class="row">
             <div class="col-2">{{project.id}}</div>
-            <div class="col-4">{{project.name}}</div>
-            <div class="col-6">{{project.description}}</div>
+            <div class="col-2">{{project.name}}</div>
+            <div class="col-2">{{project.description}}</div>
+            <div class="col-2 bg-yellow">{{testVariable}}</div>
         </div>
     }
 </div>
