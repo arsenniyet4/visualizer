@@ -1,0 +1,27 @@
+DELIMITER //
+CREATE PROCEDURE add_use_case (
+    IN in_case_name TEXT,
+    OUT out_case_id INT,
+    OUT out_case_name TEXT,
+    OUT out_case_table TEXT
+)
+BEGIN
+	SELECT @new_id := MAX(`id`) + 1 FROM `use_cases`;
+	SELECT @case_name := in_case_name;
+	SELECT @table_name := CONCAT(@new_id, '_', LOWER(REPLACE(@case_name, ' ', '_')));
+	INSERT INTO `use_cases`(`id`, `name`, `table_name`) VALUES (@new_id, @case_name, @table_name);
+
+	SET @create_table_query = CONCAT('CREATE TABLE ', @table_name, '(
+		id INT,
+		name TEXT,
+		description TEXT
+	);');
+
+	PREPARE statement FROM @create_table_query;
+	EXECUTE statement;
+	DEALLOCATE PREPARE statement;
+
+	SELECT @new_id, @case_name, @table_name
+	INTO out_case_id, out_case_name, out_case_table;
+END //
+DELIMITER ;
